@@ -1,0 +1,31 @@
+import java.util.Arrays;
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        // Edge case: If the array is empty, return an empty string
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        
+        // Sort the array alphabetically
+        Arrays.sort(strs);
+        
+        // Get the first and last strings after sorting
+        String first = strs[0];
+        String last = strs[strs.length - 1];
+        
+        int i = 0;
+        // Compare characters of the first and last strings
+        while (i < first.length() && i < last.length()) {
+            if (first.charAt(i) == last.charAt(i)) {
+                i++;
+            } else {
+                // Break as soon as a mismatch is found
+                break;
+            }
+        }
+        
+        // The substring from index 0 to i is the common prefix
+        return first.substring(0, i);
+    }
+}
