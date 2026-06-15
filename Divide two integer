@@ -1,0 +1,14 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        // 1. Handle the specific overflow edge case
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE; 
+        }
+        
+        // 2. Simple division handles all sign combinations perfectly 
+        int result = dividend / divisor;
+        
+        // 3. Return the result directly
+        return result;
+    }
+}
