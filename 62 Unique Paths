@@ -1,0 +1,26 @@
+class Solution {
+
+public static int paths(int row, int column, int m , int n,int[][]dp ){
+    // m => End row and n=> end column
+    if(row >=m || column >=n) return 0;
+    if( row >=m-1 || column >=n-1) return 1;
+    // DP Case Here
+    if(dp[row][column]!= -1)return dp[row][column];
+   
+    int RightWays = paths(row,column+1,m,n,dp);
+    int DownWays = paths(row+1,column,m,n,dp);
+    return dp[row][column]= RightWays+DownWays; 
+}
+
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0 ;j<n ; j++){
+                dp[i][j]=-1;
+            }
+        }
+        return  paths(0,0,m,n,dp);
+    }
+
+
+}
