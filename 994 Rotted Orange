@@ -1,0 +1,68 @@
+import java.util.Queue;
+import java.util.LinkedList;
+
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        // Base case check: if the grid is empty, 0 minutes are needed
+        if (grid == null || grid.length == 0) return 0;
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // Queue to store coordinates and time: {row, col, time}
+        Queue<int[]> q = new LinkedList<>();
+        int freshCount = 0;
+
+        // Step 1: Scan the grid to find all initially rotten oranges and count fresh ones
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 2) {
+                    // Push rotten orange with time 0 into the queue
+                    q.offer(new int[] { i, j, 0 });
+                } else if (grid[i][j] == 1) {
+                    // Count total fresh oranges
+                    freshCount++;
+                }
+            }
+        }
+
+        // If there are no fresh oranges at all, no time is needed
+        if (freshCount == 0) return 0;
+
+        int ans = 0;
+        // Direction arrays to easily move Up, Right, Down, and Left
+        int[] dRow = {-1, 0, 1, 0};
+        int[] dCol = {0, 1, 0, -1};
+        int rottenCount = 0; // Tracks how many fresh oranges have been rotted
+
+        // Step 2: Perform Breadth-First Search (BFS)
+        while (!q.isEmpty()) {
+            int[] curr = q.poll();
+            int r = curr[0];
+            int c = curr[1];
+            int time = curr[2];
+            
+            // Keep track of the maximum time taken
+            ans = Math.max(ans, time);
+
+            // Explore all 4 adjacent directions
+            for (int i = 0; i < 4; i++) {
+                int nRow = r + dRow[i];
+                int nCol = c + dCol[i];
+
+                // Check if the adjacent cell is within bounds and contains a fresh orange (1)
+                if (nRow >= 0 && nRow < n && nCol >= 0 && nCol < m && grid[nRow][nCol] == 1) {
+                    // Mark the fresh orange as rotten (2) to avoid revisiting
+                    grid[nRow][nCol] = 2; 
+                    // Push the newly rotten orange into the queue with incremented time
+                    q.offer(new int[] { nRow, nCol, time + 1 });
+                    // Increment the count of successfully rotted oranges
+                    rottenCount++;
+                }
+            }
+        }
+
+        // Step 3: If all fresh oranges were rotted, return the total time; otherwise, return -1
+        return rottenCount == freshCount ? ans : -1;
+    }
+}
