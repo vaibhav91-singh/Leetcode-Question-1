@@ -1,0 +1,28 @@
+class Solution {
+    public static int printmax(int[] result){
+        if(result.length == 0){
+            return 0;
+        }
+        int max = result[0];
+        for(int i = 1; i < result.length; i++){
+            if(result[i] > max){
+                max = result[i];
+            }
+        }
+        System.out.println(max);
+        return max;
+    }
+
+    public static int  maxSubArray(int[] arr) {
+
+        int maxSoFar = arr[0];
+        int currentMax = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            currentMax = Math.max(arr[i], currentMax + arr[i]);
+            maxSoFar = Math.max(maxSoFar, currentMax);
+        }
+
+        return maxSoFar;
+    }
+}
