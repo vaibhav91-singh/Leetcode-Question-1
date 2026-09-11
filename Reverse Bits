@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+
+public class Solution {
+    public int reverseBits(int n) {
+        // Pad with leading zeros to ensure it is always 32 bits
+        String binaryStr = String.format("%32s", Integer.toBinaryString(n)).replace(' ', '0');
+
+        // Store all 32 bits in the first array
+        ArrayList<Integer> firstArray = new ArrayList<>();
+        for (int i = 0; i < binaryStr.length(); i++) {
+            firstArray.add(binaryStr.charAt(i) - '0');
+        }
+
+        ArrayList<Integer> secondArray = new ArrayList<>();
+        while (!firstArray.isEmpty()) {
+            // Pop from the end (LIFO)
+            int poppedElement = firstArray.remove(firstArray.size() - 1);
+            // Push to the second array
+            secondArray.add(poppedElement);
+        }
+        
+        // Convert the second array back into a number
+        int convertedNumber = 0;
+        for (int i = 0; i < secondArray.size(); i++) {
+            convertedNumber = convertedNumber * 2 + secondArray.get(i);
+        }
+        
+        return convertedNumber;
+    }
+}
