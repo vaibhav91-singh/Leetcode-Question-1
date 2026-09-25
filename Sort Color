@@ -1,0 +1,28 @@
+//I am using DNF Algorithm in this , we use inplce only for pointers.
+class Solution {
+    public void sortColors(int[] nums) {
+        int low = 0;              // Boundary for 0s
+        int mid = 0;              // Current scanning pointer
+        int high = nums.length - 1; // Boundary for 2s
+
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // Swap to the left boundary
+                int temp = nums[low];
+                nums[low] = nums[mid];
+                nums[mid] = temp;
+                low++;
+                mid++;
+            } else if (nums[mid] == 1) {
+                // 1 is already in place, just move forward
+                mid++;
+            } else {
+                // Swap to the right boundary
+                int temp = nums[high];
+                nums[high] = nums[mid];
+                nums[mid] = temp;
+                high--;
+            }
+        }
+    }
+}
