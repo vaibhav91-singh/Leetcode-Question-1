@@ -1,0 +1,31 @@
+class Solution {
+    // swap function
+    public static void swap(int[] myarray, int left, int right) {
+        int temp = myarray[left];
+        myarray[left] = myarray[right];
+        myarray[right] = temp;
+    }
+
+    public static void moveZeroes(int[] nums) {
+        int left = 0; // Yeh non-zero element ki target position set karega
+
+        // Right pointer poore array ko scan krega  (Left se Right direction me)
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[right] != 0) {
+                swap(nums, left, right);
+                left++;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {0, 1, 0, 3, 12};
+        
+        moveZeroes(nums);
+
+        // Print output
+        for (int arr : nums) {
+            System.out.print(arr + " ");
+        }
+    }
+}
